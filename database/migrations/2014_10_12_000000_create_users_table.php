@@ -19,12 +19,12 @@ class CreateUsersTable extends Migration
             $table->text('detail')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('icon_path');
-            $table->string('token');
+            $table->string('password')->nullable();
+            $table->string('icon_path')->nullable();
+            $table->string('token')->nullable();
             $table->rememberToken();
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
+            $table->softDeletes('deleted_at', 0);
         });
     }
 

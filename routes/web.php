@@ -20,3 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('todo_history', 'App\Http\Controllers\TodoHistoryController@index');
+Route::get('todo_history/{id}', 'App\Http\Controllers\TodoHistoryController@show');
+
+Route::resource('todo', 'App\Http\Controllers\TodoController');

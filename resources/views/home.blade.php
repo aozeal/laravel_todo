@@ -16,6 +16,9 @@
 
                     {{ __('You are logged in!') }}
                 </div>
+                <div class="card-body">
+                    <a href="/todo">Todo List</a>
+                </div>
             </div>
         </div>
     </div>

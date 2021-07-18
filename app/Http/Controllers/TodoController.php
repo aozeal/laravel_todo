@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Http\Controllers\Controller;
+use App\Models\Todo;
+
 class TodoController extends Controller
 {
     /**
@@ -13,7 +16,10 @@ class TodoController extends Controller
      */
     public function index()
     {
-        //
+        //とりあえずサンプル用に全Todoを取得して表示
+        $todos = Todo::all();
+
+        return view('todo/index', compact('todos'));
     }
 
     /**

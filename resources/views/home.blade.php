@@ -19,6 +19,9 @@
                 <div class="card-body">
                     <a href="/todo">Todo List</a>
                 </div>
+                <div class="card-body">
+                    <a href="{{ route('todo.create') }}">Regist new todo</a>
+                </div>
             </div>
         </div>
     </div>

@@ -6,12 +6,17 @@
         <div class="col-md-8">
 
             @foreach($todos as $todo)
-                <tr>
-                    <td>{{ $todo->id }}</td>
-                    <td><a href="/todo/{{ 'todo->id' }}">{{ $todo->title }}</a></td>
-                    <td>{{ $todo->detail }}</td>
-                </tr>
+                <li>
+                    {{ $todo->id }}
+                    <a href="{{ route('todo.show', ['id' => $todo->id]) }}">{{ $todo->title }}</a> 
+                    <td>{{ $todo->deadline_at }}</td>
+                    <button class="done_btn" data-id="{{ $todo['id'] }}">完了</button>
+                    <button class="delete_btn" data-id="{{ $todo['id'] }}">削除</button>
+                </li>
             @endforeach
+        </div>
+        <div>
+            <a href="{{ route('todo.create') }}">新規作成</a>
         </div>
     </div>
 </div>

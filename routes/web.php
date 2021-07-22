@@ -21,7 +21,15 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('todo_history', 'App\Http\Controllers\TodoHistoryController@index');
-Route::get('todo_history/{id}', 'App\Http\Controllers\TodoHistoryController@show');
+Route::get('todo_history', 'App\Http\Controllers\TodoHistoryController@index')->name('todo_history.index');
+Route::get('todo_history/{id}', 'App\Http\Controllers\TodoHistoryController@show')->name('todo_history.show');;
 
-Route::resource('todo', 'App\Http\Controllers\TodoController');
+//Route::resource('todo', 'App\Http\Controllers\TodoController');
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('/todo/create', 'App\Http\Controllers\TodoController@create')->name('todo.create');
+    Route::get('/todo/{id}/edit', 'App\Http\Controllers\TodoController@edit')->name('todo.edit');
+    Route::get('/todo/{id}', 'App\Http\Controllers\TodoController@show')->name('todo.show');
+    Route::get('/todo', 'App\Http\Controllers\TodoController@index')->name('todo.index');
+    Route::post('/todo', 'App\Http\Controllers\TodoController@store')->name('todo.store');
+    Route::put('/todo/{id}', 'App\Http\Controllers\TodoController@update')->name('todo.update');
+});

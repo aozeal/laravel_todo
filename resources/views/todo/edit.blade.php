@@ -14,9 +14,9 @@
                 </div>
             @endif
 
-            <form action="{{ route('todo.update', ['id' => $todo['id']]) }}" method="put">
+            <form action="{{ route('todo.update', ['id' => $todo['id']]) }}" method="post">
                 @csrf
-                @method('PUT')
+                @method('put')
                 <div>タイトル</div>
                 <div><input type="text" name="title" placeholder="タイトルを記入してください" value="{{ $todo['title'] }}"></div>
                 <div>詳細</div>

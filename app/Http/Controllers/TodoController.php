@@ -9,6 +9,9 @@ use App\Models\Todo;
 
 use Illuminate\Support\Facades\Auth;
 
+use Log;
+
+
 class TodoController extends Controller
 {
     /**
@@ -19,7 +22,9 @@ class TodoController extends Controller
     public function index()
     {
         //とりあえずサンプル用に全Todoを取得して表示
-        $todos = Todo::all();
+        $user_id = Auth::id();
+
+        $todos = Todo::all()->where('user_id', $user_id);
 
         return view('todo/index', compact('todos'));
     }
@@ -66,7 +71,9 @@ class TodoController extends Controller
     public function show($id)
     {
         //
-        $todo = Todo::findOrFail($id);
+        $user_id = Auth::id();
+
+        $todo = Todo::where('user_id', $user_id)->findOrFail($id);
 
         return view('todo/show', compact('todo'));
     }
@@ -80,7 +87,9 @@ class TodoController extends Controller
     public function edit($id)
     {
         //
-        $todo = Todo::findOrFail($id);
+        $user_id = Auth::id();
+
+        $todo = Todo::where('user_id', $user_id)->findOrFail($id);
 
         return view('todo/edit', compact('todo'));
     }
@@ -106,7 +115,7 @@ class TodoController extends Controller
 
         Todo::where('id', $id)->update($validated);
 
-        dd($validated);
+        //Log::info($request);
 
         return redirect(route('todo.show', ['id' => $id]));        
     }

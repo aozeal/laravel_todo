@@ -49,8 +49,8 @@
             --}}
         </div>
         <div>
-            <button><a href="{{ route('todo.edit', ['id' => $todo['id']]) }}">編集</a>
-            </button>
+            <a href="{{ route('todo.edit', ['id' => $todo['id']]) }}">編集</a><BR>
+            <a href="{{ route('todo.index') }}">一覧</a>
         </div>
     </div>
 </div>

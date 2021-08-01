@@ -31,22 +31,19 @@
                     </tr>
                 </tbody>
             </table>
-            {{--
+            
             <div>
-                {{ $now = DateTime('Asia/Tokyo') }}
-                {{ $deadline = new DateTime($todo['deadline_at'], new DateTimeZone('Asia/Tokyo')) }}
-                {{ $interval = $deadline->diff($now) }}
+                {{----
                 @if (!is_null($todo['done_at']))
                     達成済
-                @elseif (is_null($todo['deadline_at']))
-
-                @elseif ($now > $deadline)
+                ---}}
+                @if ($todo->checkDeadline() === -1)
                     期限切れ
-                @elseif ($interval->d < 1)
+                @elseif ($todo->checkDeadline() === 0)
                     期限間近！
                 @endif
             </div>
-            --}}
+
         </div>
         <div>
             <a href="{{ route('todo.edit', ['id' => $todo['id']]) }}">編集</a><BR>

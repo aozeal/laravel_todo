@@ -9,7 +9,12 @@
                 <li>
                     {{ $todo->id }}
                     <a href="{{ route('todo.show', ['id' => $todo->id]) }}">{{ $todo->title }}</a> 
-                    <td>{{ $todo->deadline_at }}</td>
+                    {{ $todo->deadline_at }}
+                    @if ($todo->checkDeadline() === -1)
+                        <span>期限切れ</span>
+                    @elseif ($todo->checkDeadline() === 0)
+                        <span>期限間近</span>
+                    @endif
                     <button class="done_btn" data-id="{{ $todo['id'] }}">完了</button>
                     <button class="delete_btn" data-id="{{ $todo['id'] }}">削除</button>
                 </li>
@@ -20,4 +25,8 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="{{ asset('js/index.js') }}"></script>
+
 @endsection

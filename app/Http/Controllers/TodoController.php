@@ -9,6 +9,8 @@ use App\Models\Todo;
 
 use Illuminate\Support\Facades\Auth;
 
+use Carbon\Carbon;
+
 use Log;
 
 
@@ -24,7 +26,7 @@ class TodoController extends Controller
         //とりあえずサンプル用に全Todoを取得して表示
         $user_id = Auth::id();
 
-        $todos = Todo::all()->where('user_id', $user_id);
+        $todos = Todo::all()->whereNull('done_at')->where('user_id', $user_id);
 
         return view('todo/index', compact('todos'));
     }
@@ -129,5 +131,29 @@ class TodoController extends Controller
     public function destroy($id)
     {
         //
+        $user_id = Auth::id();
+
+//        $todo = Todo::where('user_id', $user_id)->findOrFail($id)->delete();
+//        $todo->delete();
+        Todo::where('user_id', $user_id)->findOrFail($id)->delete();
+
+        Log::error('redirect to ' . route('todo.create'));
+        //return redirect(route('todo.index'));
+        return redirect()->route('todo.create');
+
+    }
+
+    public function done($id)
+    {
+        $user_id = Auth::id();
+
+        $todo = Todo::where('user_id', $user_id)->whereNull('done_at')->findOrFail($id);
+
+        $now = Carbon::now('Asia/Tokyo');
+        $todo->done_at = $now;
+        $todo->save();
+
+        Log::error('redirect to ' . route('todo.index'));
+        return redirect()->back();
     }
 }

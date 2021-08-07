@@ -139,7 +139,11 @@ class TodoController extends Controller
 
         Log::error('redirect to ' . route('todo.create'));
         //return redirect(route('todo.index'));
-        return redirect()->route('todo.create');
+        //return redirect()->route('todo.create');
+        $response = array(
+            'result' => 'success'
+        );
+        return $response;
 
     }
 
@@ -153,7 +157,12 @@ class TodoController extends Controller
         $todo->done_at = $now;
         $todo->save();
 
-        Log::error('redirect to ' . route('todo.index'));
-        return redirect()->back();
+//        Log::error('redirect to ' . route('todo.index'));
+//        return redirect()->back();
+        $response = array(
+            'result' => 'success'
+        );
+        return $response;
+
     }
 }

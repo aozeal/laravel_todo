@@ -15,13 +15,21 @@ $(".delete_btn").on('click', function(){
 				'_method':'DELETE'
 			}
 		})
-
-		.done(function(){
-
+		.done(function(data, textStatus, jqXHR){
+			if (data.result === "error"){
+				alert(data.error_msg);
+			}
+			else{
+				location.href = "./todo";
+			}
 		})
-
-		.fail(function(){
-			alert('error');
+		.fail(function(data, textStatus, jqXHR){
+			if (data.error_msg){
+				alert(data.error_msg);
+			}
+			else{
+				alert("error");
+			}
 		});
 	}
 });
@@ -41,15 +49,22 @@ $(".done_btn").on('click', function(){
 				'_method':'PUT'
 			}
 		})
-
-		.done(function(){
-
+		.done(function(data, textStatus, jqXHR){
+			if (data.result === "error"){
+				alert(data.error_msg);
+			}
+			else{
+				location.href = "./todo";
+			}
 		})
-
-		.fail(function(){
-			alert('error');
+		.fail(function(data, textStatus, jqXHR){
+			if (data.error_msg){
+				alert(data.error_msg);
+			}
+			else{
+				alert("error");
+			}
 		});
-
 	}
 });
 

@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::put('/todo/{id}/done', 'App\Http\Controllers\Api\TodoController@done')->name('todo.done');
+Route::delete('/todo/{id}', 'App\Http\Controllers\Api\TodoController@destroy')->name('todo.delete');

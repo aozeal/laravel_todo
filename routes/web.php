@@ -31,7 +31,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/todo/{id}', 'App\Http\Controllers\TodoController@show')->name('todo.show');
     Route::get('/todo', 'App\Http\Controllers\TodoController@index')->name('todo.index');
     Route::post('/todo', 'App\Http\Controllers\TodoController@store')->name('todo.store');
-  //  Route::put('/todo/{id}/done', 'App\Http\Controllers\TodoController@done')->name('todo.done');
+    Route::put('/todo/{id}/done', 'App\Http\Controllers\TodoController@done')->name('todo.done');
     Route::put('/todo/{id}', 'App\Http\Controllers\TodoController@update')->name('todo.update');
-//    Route::delete('/todo/{id}', 'App\Http\Controllers\TodoController@destroy')->name('todo.delete');
+    Route::delete('/todo/{id}', 'App\Http\Controllers\TodoController@destroy')->name('todo.delete');
 });

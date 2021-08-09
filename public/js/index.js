@@ -58,6 +58,7 @@ $(".done_btn").on('click', function(){
 			}
 		})
 		.fail(function(data, textStatus, jqXHR){
+			console.log(data);
 			if (data.error_msg){
 				alert(data.error_msg);
 			}

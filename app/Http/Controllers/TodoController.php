@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\DB;
+
+use Exception;
 use Log;
 
 
@@ -59,7 +62,18 @@ class TodoController extends Controller
         ];
         $validated = $request->validate($rules);
         $validated['user_id'] = $user_id;
-        Todo::create($validated);
+
+        DB::beginTransaction();
+        try {
+            Todo::create($validated);
+            DB::commit();
+        } catch (\Exception $e){
+            DB::rollback();
+
+            $error_msg = $e->getMessage();
+            Log::error($error_msg);
+            return redirect()->back()->withErrors(['error' => $error_msg])->withInput();
+        }
 
         return redirect(route('todo.index'));
     }
@@ -115,9 +129,15 @@ class TodoController extends Controller
         $validated = $request->validate($rules);
         $validated['user_id'] = $user_id;
 
-        Todo::where('id', $id)->update($validated);
-
-        //Log::info($request);
+        DB::beginTransaction();
+        try {
+            Todo::where('id', $id)->update($validated);
+            DB::commit();
+        } catch (\Exception $e){
+            DB::rollback();
+            $error_msg = $e->getMessage();
+            return redirect()->back()->withInput()->withErrors(['error' => $error_msg]);
+        }
 
         return redirect(route('todo.show', ['id' => $id]));        
     }
@@ -133,13 +153,21 @@ class TodoController extends Controller
         //
         $user_id = Auth::id();
 
-//        $todo = Todo::where('user_id', $user_id)->findOrFail($id)->delete();
-//        $todo->delete();
-        Todo::where('user_id', $user_id)->findOrFail($id)->delete();
+        DB::beginTransaction();
+        try {
+            Todo::where('user_id', $user_id)->findOrFail($id)->delete();
+            DB::commit();
+        } catch (\Exception $e){
+            DB::rollback();
+            $error_msg = $e->getMessage();
 
-        Log::error('redirect to ' . route('todo.create'));
-        //return redirect(route('todo.index'));
-        //return redirect()->route('todo.create');
+            $response = array(
+                'result' => 'error',
+                'error_msg' => $error_msg
+            );
+            return $response;
+        }
+
         $response = array(
             'result' => 'success'
         );
@@ -155,10 +183,22 @@ class TodoController extends Controller
 
         $now = Carbon::now('Asia/Tokyo');
         $todo->done_at = $now;
-        $todo->save();
 
-//        Log::error('redirect to ' . route('todo.index'));
-//        return redirect()->back();
+        DB::beginTransaction();
+        try {
+            $todo->save();
+            DB::commit();
+        } catch (\Exception $e){
+            DB::rollback();
+
+            $error_msg = $e->getMessage();
+            $response = array(
+                'result' => 'error',
+                'error_msg' => $error_msg
+            );
+            return $response;
+        }
+
         $response = array(
             'result' => 'success'
         );

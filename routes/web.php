@@ -34,4 +34,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::put('/todo/{id}/done', 'App\Http\Controllers\TodoController@done')->name('todo.done');
     Route::put('/todo/{id}', 'App\Http\Controllers\TodoController@update')->name('todo.update');
     Route::delete('/todo/{id}', 'App\Http\Controllers\TodoController@destroy')->name('todo.delete');
+
+    Route::get('/user/{id}/edit', 'App\Http\Controllers\UserController@edit')->name('user.edit');
+    Route::get('/user/{id}', 'App\Http\Controllers\UserController@show')->name('user.show');
+    Route::put('/user/{id}', 'App\Http\Controllers\UserController@update')->name('user.update');
 });

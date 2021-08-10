@@ -52,12 +52,21 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown">
+                            @if (is_null(Auth::user()->icon_path))
+                                <img src="{{ asset('storage/avatar/default.png') }}" width=30 height=30>
+                            @else
+                                <img src="{{ asset('storage/avatar/' . Auth::user()->icon_path) }}" width=30 height=30>
+                            @endif
+                                <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('user.show', ['id' => Auth::user()->id ]) }}">
+                                        ユーザー情報
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

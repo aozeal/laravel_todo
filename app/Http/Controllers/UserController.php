@@ -3,6 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Log;
+
 
 class UserController extends Controller
 {
@@ -46,6 +53,14 @@ class UserController extends Controller
     public function show($id)
     {
         //
+        if ($id != Auth::id()){
+            return redirect('/');
+        }
+
+        $user = User::findOrFail($id);
+
+        return view('user/show', compact('user'));
+
     }
 
     /**
@@ -57,6 +72,13 @@ class UserController extends Controller
     public function edit($id)
     {
         //
+        if ($id != Auth::id()){
+            return redirect('/');
+        }
+
+        $user = User::findOrFail($id);
+
+        return view('user/edit', compact('user'));
     }
 
     /**
@@ -69,6 +91,40 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
+        if ($id != Auth::id()){
+            return redirect('/');
+        }
+
+        $rules = [
+            'name' => 'required|max:255',
+            'detail' => 'nullable|max:1000'
+        ];
+        $validated = $request->validate($rules);
+
+        $file = $request->file('avatar');
+        if (!is_null($file)){
+            $filename = sprintf('%s.%s', uniqid(), pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION));
+            $file->storeAs('public/avatar', $filename);
+
+            $user_data = User::findOrFail($id);
+            if (!is_null($user_data['icon_path'])){
+                Storage::delete('public/avatar/' . $user_data['icon_path']);
+            }
+            $validated['icon_path'] = $filename;
+        }
+
+        DB::beginTransaction();
+        try{
+            User::where('id', $id)->update($validated);
+            DB::commit();
+        } catch (\Exception $e){
+            DB::rollback();
+            $error_msg = $e->getMessage();
+            return redirect()->back()->withInput()->withErrors(['error' => $error_msg]);
+        }
+
+        return redirect(route('user.show', ['id' => $id]));
+
     }
 
     /**

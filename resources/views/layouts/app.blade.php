@@ -63,6 +63,14 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('todo.index') }}">
+                                        Todo一覧
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('todo_history.index') }}">
+                                        Todo履歴
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('user.show', ['id' => Auth::user()->id ]) }}">
                                         ユーザー情報
                                     </a>

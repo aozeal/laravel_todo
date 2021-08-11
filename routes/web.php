@@ -21,8 +21,11 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('todo_history', 'App\Http\Controllers\TodoHistoryController@index')->name('todo_history.index');
-Route::get('todo_history/{id}', 'App\Http\Controllers\TodoHistoryController@show')->name('todo_history.show');;
+Route::group(['middleware'=> ['auth']], function(){
+    Route::get('todo_history', 'App\Http\Controllers\TodoHistoryController@index')->name('todo_history.index');
+    Route::get('todo_history/{id}', 'App\Http\Controllers\TodoHistoryController@show')->name('todo_history.show');;
+});
+
 
 //Route::resource('todo', 'App\Http\Controllers\TodoController');
 Route::group(['middleware' => ['auth']], function(){

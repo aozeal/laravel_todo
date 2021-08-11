@@ -4,6 +4,10 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <div>
+                設定時刻：{{ $target_date }}
+                <BR><BR>
+            </div>
 
             <table>
                 <thread>
@@ -33,19 +37,20 @@
             </table>
             
             <div>
+                {{----
                 @if (!is_null($todo['done_at']))
                     達成済
-                @elseif ($todo->checkDeadline() === -1)
+                ---}}
+                @if ($todo->checkDeadline($target_date) === -1)
                     期限切れ
-                @elseif ($todo->checkDeadline() === 0)
+                @elseif ($todo->checkDeadline($target_date) === 0)
                     期限間近！
                 @endif
             </div>
 
         </div>
         <div>
-            <a href="{{ route('todo.edit', ['id' => $todo['id']]) }}">編集</a><BR>
-            <a href="{{ route('todo.index') }}">一覧</a>
+            <a href="{{ route('todo_history.index') }}">一覧</a>
         </div>
     </div>
 </div>

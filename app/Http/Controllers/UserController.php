@@ -106,13 +106,15 @@ class UserController extends Controller
         $file = $request->file('avatar');
         if (!is_null($file)){
             $filename = sprintf('%s.%s', uniqid(), pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION));
-            $file->storeAs('public/avatar', $filename);
+            $file->storeAs('public/avatar', $filename, ['disk'=>'s3', 'ACL' => 'public-read']);
+            $url = Storage::disk('s3')->url('public/avatar/'.$filename);
+            $validated['icon_path'] = $url;
 
             $user_data = User::findOrFail($id);
             if (!is_null($user_data['icon_path'])){
-                Storage::delete('public/avatar/' . $user_data['icon_path']);
+                $old_filename = pathinfo($user_data['icon_path'], PATHINFO_BASENAME);
+                Storage::disk('s3')->delete('public/avatar/'.$old_filename);
             }
-            $validated['icon_path'] = $filename;
         }
 
         DB::beginTransaction();

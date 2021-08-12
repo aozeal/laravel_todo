@@ -47,7 +47,8 @@ class TodoController extends Controller
             'view_deadline' => $request->input('view_deadline', null),
             'keyword' => $request->input('keyword', null),
             'sort_type' => $request->input('sort_type', null),
-            'page' => $request->input('page', 1)
+            'page' => $request->input('page', 1),
+            'total_pages' => $request->input('total_pages', 1)
         );
 
         $user_id = Auth::id();

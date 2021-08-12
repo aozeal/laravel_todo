@@ -26,6 +26,9 @@ Route::group(['middleware'=> ['auth']], function(){
     Route::get('todo_history/{id}', 'App\Http\Controllers\TodoHistoryController@show')->name('todo_history.show');;
 });
 
+//トークンを後から発行
+Route::get('/user/token', 'App\Http\Controllers\UserController@token')->middleware('auth');
+
 
 //Route::resource('todo', 'App\Http\Controllers\TodoController');
 Route::group(['middleware' => ['auth']], function(){
@@ -42,3 +45,4 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/user/{id}', 'App\Http\Controllers\UserController@show')->name('user.show');
     Route::put('/user/{id}', 'App\Http\Controllers\UserController@update')->name('user.update');
 });
+

@@ -118,7 +118,7 @@ use App\Http\Controllers\TodoController
         </div>
         <BR>
         <div class="col-md-8">
-            @for ($i=1; $i<$data['total_pages']; $i++)
+            @for ($i=1; $i<=$data['total_pages']; $i++)
                 @if ($i == $data['page'])
                     {{ $i }}
                 @else

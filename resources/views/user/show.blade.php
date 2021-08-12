@@ -27,7 +27,11 @@
                     </tr>
                 </tbody>
             </table>
-            <img src="{{ asset('storage/avatar/' . $user['icon_path']) }}" width=50 height=50>
+            @if (!is_null($user['icon_path']))
+                <img src="{{ asset('storage/avatar/' . $user['icon_path']) }}" width=50 height=50>
+            @else
+                <img src="{{ asset('storage/avatar/default.png') }}" width=50 height=50>
+            @endif
             
         </div>
         <div>

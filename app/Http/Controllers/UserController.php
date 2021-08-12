@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Sanctum\HasApiTokens;
+
 use Log;
 
 
@@ -136,5 +138,17 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function token()
+    {
+        $id = Auth::id();
+        $user = User::findOrFail($id);
+
+        $user->tokens()->delete();
+
+        $token = $user->createToken($user->name)->plainTextToken;
+
+        return view('user/token', compact('token'));
     }
 }

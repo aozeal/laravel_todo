@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
 
-            <table>
+            <table class="table table-bordered">
                 <thread>
                     <tr>
                         <th>タイトル</th>
@@ -23,7 +23,18 @@
                             {{ $todo['detail'] }}
                         </td>
                         <td>
-                            {{ $todo['deadline_at'] }}
+                            <div>
+                                {{ $todo['deadline_at'] }}
+                            </div>
+                            <div>
+                                @if (!is_null($todo['done_at']))
+                                    達成済
+                                @elseif ($todo->checkDeadline() === -1)
+                                    期限切れ
+                                @elseif ($todo->checkDeadline() === 0)
+                                    期限間近！
+                                @endif
+                            </div>
                         </td>
                         <td>
                             {{ $todo['done_at'] }}
@@ -32,18 +43,9 @@
                 </tbody>
             </table>
             
-            <div>
-                @if (!is_null($todo['done_at']))
-                    達成済
-                @elseif ($todo->checkDeadline() === -1)
-                    期限切れ
-                @elseif ($todo->checkDeadline() === 0)
-                    期限間近！
-                @endif
-            </div>
 
         </div>
-        <div>
+        <div class="col-md-2">
             <a href="{{ route('todo.edit', ['id' => $todo['id']]) }}">編集</a><BR>
             <a href="{{ route('todo.index') }}">一覧</a>
         </div>

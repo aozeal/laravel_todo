@@ -7,14 +7,12 @@ use App\Http\Controllers\TodoController
 @endphp
 
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-
+    <div class="row">
+        <div class="col-lg-9">
             <form action="{{ route('todo.index') }}" method="GET">
-                <div>
-                    達成状況
-                    <select name="view_done">
-                        <option value="">選択してください</option>
+                <p class="bs-component">
+                    <select name="view_done" class="form-control">
+                        <option value="">達成状況</option>
                         <option value="{{ TodoController::VIEW_DONE_WITHOUT_DONE }}" 
                         @if ($data['view_done'] === TodoController::VIEW_DONE_WITHOUT_DONE)
                             {{ 'selected' }}
@@ -32,11 +30,10 @@ use App\Http\Controllers\TodoController
                         @endif
                         >両方</option>
                     </select>
-                </div>
-                <div>
-                    期限
-                    <select name="view_deadline">
-                        <option value="">選択してください</option>
+                </p>
+                <p class="bs-component">
+                    <select name="view_deadline" class="form-control">
+                        <option value="">期限</option>
                         <option value="{{ TodoController::VIEW_DEADLINE_ALL }}" 
                         @if($data['view_deadline'] === TodoController::VIEW_DEADLINE_ALL)
                             {{ 'selected' }}
@@ -58,15 +55,13 @@ use App\Http\Controllers\TodoController
                         @endif
                         >期限切れのみ</option>
                     </select>
-                </div>
-                <div>
-                    検索キーワード
-                    <input type="text" name="keyword" value="{{ $data['keyword'] }}">
-                </div>
-                <div>
-                    ソート
-                    <select name="sort_type">
-                        <option value="">選択してください</option>
+                </p>
+                <p class="bs-component">
+                    <input type="text" name="keyword" value="{{ $data['keyword'] }}" class="form-control" placeholder="検索キーワード">
+                </p>
+                <p class="bs-component">
+                    <select name="sort_type" class="form-control">
+                        <option value="">ソート</option>
                         <option value="{{ TodoController::SORT_TYPE_CREATED_ASC }}" 
                         @if($data['sort_type'] === TodoController::SORT_TYPE_CREATED_ASC)
                             {{ 'selected' }}
@@ -88,36 +83,78 @@ use App\Http\Controllers\TodoController
                         @endif
                         >期限日順（降順）</option>                 
                     </select>
-                </div>
-                <button type="submit">表示条件設定</button>
+                </p>
+                <p class="bs-component">
+                    <button type="submit" class="btn btn-primary btn-sm">表示条件設定</button>
+                </p>
             </form>
-            <BR>
-
-            @foreach($todos as $todo)
-                <li>
-                    {{ $todo->id }}
-                    <a href="{{ route('todo.show', ['id' => $todo->id]) }}">{{ $todo->title }}</a> 
-                    {{ $todo->deadline_at }}
-                    @if (!is_null($todo->done_at))
-                        <span>完了</span>
-                    @elseif ($todo->checkDeadline() === -1)
-                        <span>期限切れ</span>
-                    @elseif ($todo->checkDeadline() === 0)
-                        <span>期限間近</span>
-                    @endif
-
-                    @if (is_null($todo->done_at))
-                        <button class="done_btn" data-id="{{ $todo['id'] }}">完了</button>
-                    @endif
-                    <button class="delete_btn" data-id="{{ $todo['id'] }}">削除</button>
-                </li>
-            @endforeach
         </div>
-        <div>
+        <div class="col-lg-3">
             <a href="{{ route('todo.create') }}">新規作成</a>
         </div>
-        <BR>
-        <div class="col-md-8">
+    </div>
+
+    <div class="bs-component">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <input type="text" name="keyword" value="{{ $data['keyword'] }}" class="form-control mr-sm-2" placeholder="検索キーワード">
+            <button type="submit" class="btn btn-primary btn-sm my-2 my-sm-0">表示条件設定</button>
+        </nav>
+
+    </div>
+
+
+    <div>
+        <div class="col-lg-10">
+            <table class="table table-hover">
+                <thread>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">ToDo</th>
+                        <th scope="col">DeadLine</th>
+                        <th scope="col">Info</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thread>                    
+
+                @foreach($todos as $todo)
+
+                    @if (!is_null($todo->done_at))
+                        <tr class="table-dark">
+                    @elseif ($todo->checkDeadline() === -1)
+                        <tr class="table-danger">
+                    @elseif ($todo->checkDeadline() === 0)
+                        <tr class="table-warning">
+                    @else
+                        <tr class="table-default">
+                    @endif
+                        <th scope="row">
+                            {{ $todo->id }}
+                        </th>
+                        <th scope="row">
+                            <a href="{{ route('todo.show', ['id' => $todo->id]) }}">{{ $todo->title }}</a> 
+                        </th>
+                        <th scope="row">
+                            {{ $todo->deadline_at }}
+                        </th>
+                        <th scope="row">
+                            @if (!is_null($todo->done_at))
+                                完了
+                            @elseif ($todo->checkDeadline() === -1)
+                                期限切れ
+                            @elseif ($todo->checkDeadline() === 0)
+                                期限間近
+                            @endif
+                        </th>
+                        <th scope="row">
+                            @if (is_null($todo->done_at))
+                                <button class="done_btn" data-id="{{ $todo['id'] }}">完了</button>
+                            @endif
+                            <button class="delete_btn" data-id="{{ $todo['id'] }}">削除</button>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
+        <div class="col-lg-8">
             @for ($i=1; $i<=$data['total_pages']; $i++)
                 @if ($i == $data['page'])
                     {{ $i }}

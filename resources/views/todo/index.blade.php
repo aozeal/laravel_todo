@@ -8,9 +8,10 @@ use App\Http\Controllers\TodoController
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-9">
+        <div class="col-lg-10">
             <form action="{{ route('todo.index') }}" method="GET">
-                <p class="bs-component">
+                <p class="bs-component"></p>
+                <div class="navbar navbar-expand-lg navbar-light bg-light">
                     <select name="view_done" class="form-control">
                         <option value="">達成状況</option>
                         <option value="{{ TodoController::VIEW_DONE_WITHOUT_DONE }}" 
@@ -30,8 +31,6 @@ use App\Http\Controllers\TodoController
                         @endif
                         >両方</option>
                     </select>
-                </p>
-                <p class="bs-component">
                     <select name="view_deadline" class="form-control">
                         <option value="">期限</option>
                         <option value="{{ TodoController::VIEW_DEADLINE_ALL }}" 
@@ -55,11 +54,7 @@ use App\Http\Controllers\TodoController
                         @endif
                         >期限切れのみ</option>
                     </select>
-                </p>
-                <p class="bs-component">
                     <input type="text" name="keyword" value="{{ $data['keyword'] }}" class="form-control" placeholder="検索キーワード">
-                </p>
-                <p class="bs-component">
                     <select name="sort_type" class="form-control">
                         <option value="">ソート</option>
                         <option value="{{ TodoController::SORT_TYPE_CREATED_ASC }}" 
@@ -83,25 +78,16 @@ use App\Http\Controllers\TodoController
                         @endif
                         >期限日順（降順）</option>                 
                     </select>
-                </p>
-                <p class="bs-component">
                     <button type="submit" class="btn btn-primary btn-sm">表示条件設定</button>
-                </p>
+                </div>
             </form>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-2">
             <a href="{{ route('todo.create') }}">新規作成</a>
         </div>
     </div>
-
-    <div class="bs-component">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <input type="text" name="keyword" value="{{ $data['keyword'] }}" class="form-control mr-sm-2" placeholder="検索キーワード">
-            <button type="submit" class="btn btn-primary btn-sm my-2 my-sm-0">表示条件設定</button>
-        </nav>
-
-    </div>
-
+    
+    <p class="bs-component"></p>
 
     <div>
         <div class="col-lg-10">

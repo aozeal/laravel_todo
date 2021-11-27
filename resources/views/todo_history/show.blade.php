@@ -4,49 +4,55 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div>
-                設定時刻：{{ $target_date }}
-                <BR><BR>
+            <div class="navbar navbar-expand-lg navbar-light bg-light">
+                <h5>
+                    設定時刻：{{ $target_date }}
+                </h5>
             </div>
+            <p class="bs-component"></p>
 
-            <table>
+            <table class="table table-bordered">
                 <thread>
                     <tr>
                         <th>タイトル</th>
-                        <th>詳細</th>
-                        <th>期日</th>
-                        <th>完了日</th>
-                    </tr>
-                </thread>
-                <tbody>
-                    <tr>
                         <td scope="row">
                             {{ $todo['title'] }}
                         </td>
+
+                    </tr>
+                    <tr>
+                        <th>詳細</th>
                         <td>
                             {{ $todo['detail'] }}
-                        </td>
+                        </td>                        
+                    </tr>
+                    <tr>
+                        <th>期日</th>
                         <td>
-                            {{ $todo['deadline_at'] }}
-                        </td>
-                        <td>
-                            {{ $todo['done_at'] }}
+                            <div>
+                                {{ $todo['deadline_at'] }}
+                            </div>                        
                         </td>
                     </tr>
-                </tbody>
+                    <tr>
+                        <th>完了日</th>
+                        <td>
+                            <div>
+                                {{ $todo['done_at'] }}
+                            </div>
+                            <div>
+                                @if (!is_null($todo['done_at']))
+                                    達成済
+                                @elseif ($todo->checkDeadline($target_date) === -1)
+                                    期限切れ
+                                @elseif ($todo->checkDeadline($target_date) === 0)
+                                    期限間近！
+                                @endif
+                            </div>
+                        </td>
+                    </tr>
+                </thread>
             </table>
-            
-            <div>
-                {{----
-                @if (!is_null($todo['done_at']))
-                    達成済
-                ---}}
-                @if ($todo->checkDeadline($target_date) === -1)
-                    期限切れ
-                @elseif ($todo->checkDeadline($target_date) === 0)
-                    期限間近！
-                @endif
-            </div>
 
         </div>
         <div>

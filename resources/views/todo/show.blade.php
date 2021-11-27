@@ -9,22 +9,30 @@
                 <thread>
                     <tr>
                         <th>タイトル</th>
-                        <th>詳細</th>
-                        <th>期日</th>
-                        <th>完了日</th>
-                    </tr>
-                </thread>
-                <tbody>
-                    <tr>
                         <td scope="row">
                             {{ $todo['title'] }}
                         </td>
+
+                    </tr>
+                    <tr>
+                        <th>詳細</th>
                         <td>
                             {{ $todo['detail'] }}
-                        </td>
+                        </td>                        
+                    </tr>
+                    <tr>
+                        <th>期日</th>
                         <td>
                             <div>
                                 {{ $todo['deadline_at'] }}
+                            </div>                        
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>完了日</th>
+                        <td>
+                            <div>
+                                {{ $todo['done_at'] }}
                             </div>
                             <div>
                                 @if (!is_null($todo['done_at']))
@@ -36,11 +44,8 @@
                                 @endif
                             </div>
                         </td>
-                        <td>
-                            {{ $todo['done_at'] }}
-                        </td>
                     </tr>
-                </tbody>
+                </thread>
             </table>
             
 

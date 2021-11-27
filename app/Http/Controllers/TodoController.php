@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 use App\Http\Controllers\Controller;
 use App\Models\Todo;
@@ -333,4 +334,12 @@ class TodoController extends Controller
         return $response;
 
     }
+
+/*
+    //エラー表示テスト用
+    public function errorTest(){
+        $error_code = "EA-80";
+        abort(500, 'internal errror EA-80', ['error_code' => 'EA-80', 'error_code2'=>'xxx']);
+    }
+*/
 }

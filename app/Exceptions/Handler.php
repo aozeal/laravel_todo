@@ -38,4 +38,16 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    //オリジナルデザインのエラー画面をレンダリング
+    protected function renderHttpException($e)
+    {
+        $status = $e->getStatusCode();
+        $header = $e->getHeaders();
+        return response()->view('errors.common', ['exception'=>$e],
+            $status, //レスポンス自体のステータスコード
+            $header
+        );
+    }
+
 }

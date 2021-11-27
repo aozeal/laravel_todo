@@ -32,6 +32,8 @@ Route::get('/user/token', 'App\Http\Controllers\UserController@token')->middlewa
 
 //Route::resource('todo', 'App\Http\Controllers\TodoController');
 Route::group(['middleware' => ['auth']], function(){
+//    Route::get('/todo/error_test', 'App\Http\Controllers\TodoController@errorTest')->name('todo.error'); //エラーページの動作確認用
+
     Route::get('/todo/create', 'App\Http\Controllers\TodoController@create')->name('todo.create');
     Route::get('/todo/{id}/edit', 'App\Http\Controllers\TodoController@edit')->name('todo.edit');
     Route::get('/todo/{id}', 'App\Http\Controllers\TodoController@show')->name('todo.show');
@@ -44,5 +46,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/user/{id}/edit', 'App\Http\Controllers\UserController@edit')->name('user.edit');
     Route::get('/user/{id}', 'App\Http\Controllers\UserController@show')->name('user.show');
     Route::put('/user/{id}', 'App\Http\Controllers\UserController@update')->name('user.update');
+
 });
+
 

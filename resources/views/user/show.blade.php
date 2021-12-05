@@ -5,33 +5,39 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
 
-            <table>
+            <table class="table table-bordered">
                 <thread>
                     <tr>
                         <th>名前</th>
-                        <th>詳細</th>
-                        <th>メールアドレス</th>
-                    </tr>
-                </thread>
-                <tbody>
-                    <tr>
                         <td scope="row">
                             {{ $user['name'] }}
                         </td>
+
+                    </tr>
+                    <tr>
+                        <th>詳細</th>
                         <td>
                             {{ $user['detail'] }}
-                        </td>
+                        </td>                        
+                    </tr>
+                    <tr>
+                        <th>メールアドレス</th>
                         <td>
                             {{ $user['email'] }}
                         </td>
                     </tr>
-                </tbody>
+                    <tr>
+                        <th>アイコン</th>
+                        <td>
+                            @if (!is_null($user['icon_path']))
+                                <img src="{{ $user['icon_path'] }}" width=50 height=50>
+                            @else
+                                <img src="{{ asset('storage/avatar/default.png') }}" width=50 height=50>
+                            @endif
+                        </td>
+                    </tr>
+                </thread>
             </table>
-            @if (!is_null($user['icon_path']))
-                <img src="{{ $user['icon_path'] }}" width=50 height=50>
-            @else
-                <img src="{{ asset('storage/avatar/default.png') }}" width=50 height=50>
-            @endif
             
         </div>
         <div>

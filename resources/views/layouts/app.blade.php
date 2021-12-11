@@ -55,7 +55,7 @@
                             @if (is_null(Auth::user()->icon_path))
                                 <img src="{{ asset('storage/avatar/default.png') }}" width=30 height=30>
                             @else
-                                <img src="{{ $user['icon_path'] }}" width=30 height=30>
+                                <img src="{{ Auth::user()->icon_path }}" width=30 height=30>
                             @endif
                                 <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

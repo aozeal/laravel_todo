@@ -16,11 +16,11 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+#Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/', function () {
     return view('home');
-});
+})->middleware('auth');
 
 Route::group(['middleware'=> ['auth']], function(){
     Route::get('todo_history', 'App\Http\Controllers\TodoHistoryController@index')->name('todo_history.index');

@@ -18,7 +18,7 @@
                     {{ $status_code }} : {{ $message }}
                 </div>
                 <div class="card-body">
-                    <a class="btn btn-primary" href="/" role="button">トップに戻る</a>
+                    <a class="btn btn-primary" href="{{ url('/') }}" role="button">トップに戻る</a>
                 </div>
             </div>
         </div>
